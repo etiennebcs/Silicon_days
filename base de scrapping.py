@@ -64,6 +64,7 @@ def essai_manuel_nb_recherche()->str:
 url_1 = 'https://www.lemonde.fr/international/article/2024/03/26/attentat-du-crocus-city-hall-apres-avoir-accuse-kiev-moscou-designe-les-occidentaux_6224318_3210.html'
 url_2 = 'https://www.francetvinfo.fr/monde/europe/manifestations-en-ukraine/guerre-en-ukraine-pourquoi-emmanuel-macron-reitere-t-il-ses-propos-sur-le-possible-envoi-de-troupes-francaises-au-sol_6429946.html'
 url_3= 'https://www.tf1info.fr/sciences-et-innovation/jusqu-a-25-fois-plus-polluante-pourquoi-la-viande-de-synthese-n-est-finalement-pas-si-ecolo-2257168.html'
+url_4 = 'https://www.slate.fr/story/255885/adobe-vend-images-guerre-israel-hamas-ia-intelligence-artificielle'
 
 def extraction_donnee(url:str,affichage=True)->list:
     '''
@@ -141,30 +142,53 @@ def traitement_donnee(donnee:list)->(str,bool):
     return ('vérification passée',True)
 
 
-
 def standardiser_date(date_string):
     '''
-
     Standardisation de la date
-
     '''
+
     date_string = re.sub(r'^.*le ', '', date_string)
     date_string = re.sub(r'^.*at ', '', date_string)
     date_string = re.sub(r'^.*publié ', '', date_string)
+    date_string = re.sub(r'\s+à.*$', '', date_string)
     date_string = re.sub(r'\s+\d{2}:\d{2}$', '', date_string)
 
+    # Convertir les mois en anglias pour pouvoir le filtrer avec datetime
+    months_fr_to_en = {
+        'janvier': 'January',
+        'février': 'February',
+        'mars': 'March',
+        'avril': 'April',
+        'mai': 'May',
+        'juin': 'June',
+        'juillet': 'July',
+        'août': 'August',
+        'septembre': 'September',
+        'octobre': 'October',
+        'novembre': 'November',
+        'décembre': 'December'
+    }
 
-    date_formats = [
+
+    for fr_month, en_month in months_fr_to_en.items():
+        date_string = date_string.replace(fr_month, en_month)
+
+    format_date = [
         "%d/%m/%Y",
-        "%d %B %Y"
+        "%d %B %Y",
+        "%d %B %Y à %Hh%M",
+        "%Y-%m-%d"
     ]
 
-    for fmt in date_formats:
+    for fmt in format_date:
         try:
             return datetime.strptime(date_string, fmt).strftime('%Y-%m-%d')
         except ValueError:
             continue
     return None
+
+
+
 
 
 def test():
@@ -175,6 +199,7 @@ def test():
     print(traitement_donnee(extraction_donnee(url_1,False)))
     print(traitement_donnee(extraction_donnee(url_2,False)))
     print(traitement_donnee(extraction_donnee(url_3,False)))
+    print(traitement_donnee(extraction_donnee(url_4,False)))
 
 
 #cas de 3 url pour tester le programme
