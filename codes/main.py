@@ -25,9 +25,16 @@ fake_news = 'https://www.slate.fr/story/255099/israel-hamas-information-guerre-d
 
 def check_url():
     url = url_entry.get()
-    # pre-traitement : black list?
+
+    
+    # pre-traitement : black/white list?
     if pT.isInBlackList(url):
         messagebox.showinfo("Resultat", "le domaine est dans la blacklist")
+        return
+    if pT.isInWhiteList(url):
+        messagebox.showinfo("Resultat", "le lien vient d'un site d'autorité")
+        return
+
 
     # Obtain datas
     L = urlManager.extract_news_data(url)
@@ -52,7 +59,6 @@ def check_url():
         messagebox.showinfo("Resultat", "Article est trop peu cité")
         return
     """
-
 
     if not isDateNull:
             if pT.isTooRecentDate(publish_date):

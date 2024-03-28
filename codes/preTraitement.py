@@ -27,7 +27,7 @@ def isInBlackList(url):
                    "lesmoutonsenrages.fr", "wikistrike.com", "les-crises.fr", "egaliteetreconciliation.fr",
                    "nouvelordremondial.cc", "agoravox.fr", "legrandsoir.info", "panamza.com",
                    "boulevardvoltaire.fr", "dreuz.info", "contrepoints.org", "observateurcontinental.fr",
-                   "reinformation.tv", "voltairenet.org", ]
+                   "reinformation.tv", "voltairenet.org", "legorafi.fr"]
 
     # Obtain domain
     parsed_url = urlparse(url)
@@ -40,3 +40,19 @@ def isInBlackList(url):
     else:
         return False
 
+
+def isInWhiteList(url):
+    Liste_blanche = ["lemonde.fr", "gouvernement.fr", "lequipe.fr", "lefigaro.fr",
+                     "economie.gouv.fr", "liberation.fr", "francetvinfo.fr", "nytimes.com",
+                     "theguardian.com", "bbc.com", "washingtonpost.com"]
+
+    # Obtain domain
+    parsed_url = urlparse(url)
+    domaine = parsed_url.netloc
+    if domaine.startswith('www.'):
+        domaine = domaine[4:]
+
+    if domaine in Liste_blanche:
+        return True
+    else:
+        return False
