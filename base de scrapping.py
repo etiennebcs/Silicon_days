@@ -65,6 +65,7 @@ url_1 = 'https://www.lemonde.fr/international/article/2024/03/26/attentat-du-cro
 url_2 = 'https://www.francetvinfo.fr/monde/europe/manifestations-en-ukraine/guerre-en-ukraine-pourquoi-emmanuel-macron-reitere-t-il-ses-propos-sur-le-possible-envoi-de-troupes-francaises-au-sol_6429946.html'
 url_3= 'https://www.tf1info.fr/sciences-et-innovation/jusqu-a-25-fois-plus-polluante-pourquoi-la-viande-de-synthese-n-est-finalement-pas-si-ecolo-2257168.html'
 url_4 = 'https://www.slate.fr/story/255885/adobe-vend-images-guerre-israel-hamas-ia-intelligence-artificielle'
+url_5 = 'https://www.legorafi.fr/2024/03/22/mort-de-frederic-mitterrand-la-thailande-decrete-trois-jours-de-deuil-national/'
 
 def extraction_donnee(url:str,affichage=True)->list:
     '''
@@ -153,21 +154,54 @@ def standardiser_date(date_string):
     date_string = re.sub(r'\s+à.*$', '', date_string)
     date_string = re.sub(r'\s+\d{2}:\d{2}$', '', date_string)
 
-    # Convertir les mois en anglias pour pouvoir le filtrer avec datetime
+    # Traduire les mois en anglias pour pouvoir le filtrer avec datetime
     months_fr_to_en = {
+        'Janvier': 'January',
         'janvier': 'January',
+        'Jan': 'January',
+        'jan': 'January',
         'février': 'February',
+        'Février': 'February',
+        'fév': 'February',
+        'Fév.': 'February',
         'mars': 'March',
+        'Mars': 'March',
+        'Mar': 'March',
+        'mar': 'March',
         'avril': 'April',
+        'Avril': 'April',
+        'avr': 'April',
+        'Avr': 'April',
         'mai': 'May',
+        'Mai': 'May',
         'juin': 'June',
+        'Juin': 'June',
         'juillet': 'July',
+        'Juillet': 'July',
+        'Juil': 'July',
+        'juil': 'July',
         'août': 'August',
+        'Août': 'August',
+        'aou': 'August',
+        'Aou.': 'August',
         'septembre': 'September',
+        'Septembre': 'September',
+        'sep': 'September',
+        'Sep.': 'September',
         'octobre': 'October',
+        'Octobre': 'October',
+        'oct': 'October',
+        'Oct': 'October',
         'novembre': 'November',
-        'décembre': 'December'
+        'Novembre': 'November',
+        'nov': 'November',
+        'Nov': 'November',
+        'décembre': 'December',
+        'Décembre': 'December',
+        'déc': 'December',
+        'Déc.': 'December'
     }
+
 
 
     for fr_month, en_month in months_fr_to_en.items():
@@ -200,6 +234,6 @@ def test():
     print(traitement_donnee(extraction_donnee(url_2,False)))
     print(traitement_donnee(extraction_donnee(url_3,False)))
     print(traitement_donnee(extraction_donnee(url_4,False)))
-
+    print(traitement_donnee(extraction_donnee(url_5,False)))
 
 #cas de 3 url pour tester le programme
